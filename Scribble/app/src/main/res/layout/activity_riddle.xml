@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainscroll"
+    android:layout_width="match_parent"
+    android:background="#faf8ed"
+    android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="20dp"
+    android:id="@+id/main"
+    tools:context=".riddle">
+
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="30dp"
+        android:textColor="#ed8c68"
+        android:textStyle="bold"
+        android:text="#1"/>
+
+
+    <TextView
+        android:id="@+id/que"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        app:layout_constraintTop_toBottomOf="@id/number"
+        android:layout_marginLeft="5dp"
+        android:textSize="30dp"
+        android:background="@drawable/ques"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:text="Nothing to display" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintTop_toBottomOf="@id/que"
+        android:layout_marginTop="5dp"
+        android:background="#050005"/>
+
+    <HorizontalScrollView
+        android:id="@+id/scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/que"
+        app:layout_constraintLeft_toLeftOf="parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl" />
+    </HorizontalScrollView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintTop_toBottomOf="@id/scroll"
+        android:layout_marginTop="5dp"
+        android:background="#050005"/>
+
+
+    <ImageView
+        android:id="@+id/next"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:src="@drawable/nexr"
+        />
+
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/next"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent">-->
+
+
+<!--        <View-->
+<!--            android:id="@+id/vline"-->
+<!--            android:layout_width="5dp"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:background="#181ec9"/>-->
+
+<!--        <View-->
+<!--            android:id="@+id/hintview"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="100dp"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintRight_toLeftOf="@id/vline"-->
+<!--            />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="@id/hintview"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:src="@drawable/pass"/>-->
+
+
+
+
+
+<!--        <View-->
+<!--            android:id="@+id/pasview"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="100dp"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintLeft_toRightOf="@id/vline"-->
+<!--            />-->
+
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="@id/vline"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:src="@drawable/hints"/>-->
+
+
+
+
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+    <RelativeLayout
+        android:id="@+id/options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/next"
+        android:layout_marginTop="40dp">
+
+        <View
+            android:id="@+id/hzline1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="2dp"
+            android:background="#181ec9"/>
+
+        <View
+            android:id="@+id/hintsview"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="#f2f5c9"
+            android:clickable="true"
+            />
+
+         <ImageView
+             android:id="@+id/hintspic"
+             android:layout_marginTop="5dp"
+             android:layout_width="40dp"
+             android:layout_height="50dp"
+             android:src="@drawable/hints"/>
+
+          <TextView
+              android:id="@+id/hintstext"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="60dp"
+              android:layout_marginTop="10dp"
+              android:text="HINTS"
+              android:textStyle="bold"
+              android:fontFamily="sans-serif-condensed-light"
+              android:textSize="30dp"/>
+
+        <View
+            android:id="@+id/hzline2"
+            android:layout_width="match_parent"
+            android:layout_alignBottom="@+id/hintsview"
+            android:layout_height="2dp"
+            android:layout_marginTop="2dp"
+            android:background="#181ec9"/>
+
+        <View
+            android:id="@+id/passview"
+            android:layout_width="match_parent"
+            android:layout_alignTop="@+id/hzline2"
+            android:layout_height="50dp"
+            android:layout_marginTop="2dp"
+            android:background="#f2f5c9"
+            android:clickable="true"/>
+
+        <ImageView
+            android:id="@+id/passpic"
+            android:layout_alignTop="@+id/passview"
+            android:layout_marginTop="3dp"
+            android:layout_width="35dp"
+            android:layout_height="45dp"
+            android:src="@drawable/pass"/>
+
+
+
+        <TextView
+            android:id="@+id/passtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/passview"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="8dp"
+            android:text="PASS"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-light"
+            android:textSize="30dp"/>
+
+        <View
+            android:id="@+id/hzline3"
+            android:layout_width="match_parent"
+            android:layout_alignBottom="@+id/passview"
+            android:layout_height="2dp"
+            android:layout_marginTop="2dp"
+            android:background="#181ec9"/>
+
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/options"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp">
+
+
+        <ImageView
+            android:id="@+id/scorepic"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="3dp"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:src="@drawable/score"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/scorepic"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            android:text="SCORE"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            />
+
+
+        <TextView
+            android:id="@+id/scorebox1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/scorepic"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/scorebox2"
+            android:background="@drawable/rect"
+            android:text="1"
+            android:textSize="100dp"
+            android:gravity="center"
+        />
+
+
+    <TextView
+        android:id="@+id/scorebox2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/scorepic"
+        app:layout_constraintLeft_toRightOf="@+id/scorebox1"
+        app:layout_constraintRight_toLeftOf="@+id/scorebox3"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/rect"
+        android:text="1"
+        android:textSize="100dp"
+        android:gravity="center"
+        />
+
+        <TextView
+            android:id="@+id/scorebox3"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/scorepic"
+            app:layout_constraintLeft_toRightOf="@+id/scorebox2"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/rect"
+            android:text="1"
+            android:textSize="100dp"
+            android:gravity="center"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+

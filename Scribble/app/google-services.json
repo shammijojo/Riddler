@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "179088197609",
+    "firebase_url": "https://scribble-dbedf.firebaseio.com",
+    "project_id": "scribble-dbedf",
+    "storage_bucket": "scribble-dbedf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179088197609:android:1c13b3f65cefb6b9b82d78",
+        "android_client_info": {
+          "package_name": "com.example.scribble"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "179088197609-d3fv6fnb5921sja6mjjmq0s5pm9bvc15.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.scribble",
+            "certificate_hash": "428741a03581db7e95a4007dd75a9c9ef4ba511a"
+          }
+        },
+        {
+          "client_id": "179088197609-s8nhfgiifbj8mjsclc10dvami7qiges9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.scribble",
+            "certificate_hash": "b942f0c2998ef3b31408514fe1109c636f56117f"
+          }
+        },
+        {
+          "client_id": "179088197609-s538us4ius34ei689in7759af0e47h35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4bQUbdLFz5RX-BDU-ZdNWE1vlecV3-Ro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "179088197609-s538us4ius34ei689in7759af0e47h35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179088197609:android:143aa0fde58e3e32b82d78",
+        "android_client_info": {
+          "package_name": "com.myapp.riddle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "179088197609-b0gcrqhmp54fnva5rejpljepvnupvb7a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myapp.riddle",
+            "certificate_hash": "b942f0c2998ef3b31408514fe1109c636f56117f"
+          }
+        },
+        {
+          "client_id": "179088197609-s538us4ius34ei689in7759af0e47h35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4bQUbdLFz5RX-BDU-ZdNWE1vlecV3-Ro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "179088197609-s538us4ius34ei689in7759af0e47h35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
