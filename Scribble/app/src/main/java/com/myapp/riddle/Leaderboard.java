@@ -60,7 +60,7 @@ public class Leaderboard extends AppCompatActivity {
 
                 Collections.sort(list,comparebyscore);
 
-                leaderboardlist adapter=new leaderboardlist(Leaderboard.this,list);
+                LeaderboardList adapter=new LeaderboardList(Leaderboard.this,list);
                 listView=findViewById(R.id.list);
                 listView.setAdapter(adapter);
 

@@ -63,10 +63,10 @@ public class riddle extends AppCompatActivity {
         que=findViewById(R.id.que);
         db=new Database(this);
 
-        final int level=Integer.parseInt(db.getfromdb("level"));
-        setque(level);
+        final int level=Integer.parseInt(db.getFromDb("level"));
+        setQue(level);
 
-        String cscore=db.getfromdb("score");
+        String cscore=db.getFromDb("score");
         if(Integer.parseInt(cscore)<10)
         {
             score1.setText("0");
@@ -94,11 +94,11 @@ public class riddle extends AppCompatActivity {
         correctimageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String currentscore=db.getfromdb("score");
+                String currentscore=db.getFromDb("score");
                 points=Integer.parseInt(currentscore)+points;
-                db.updateuserinfo("level",level+1);
-                db.updateuserinfo("score",points);
-                firebase.updatescore(db.getfromdb("name"),points);
+                db.updateUserInfo("level",level+1);
+                db.updateUserInfo("score",points);
+                firebase.updateScore(db.getFromDb("name"),points);
                 finish();
                 Intent i=new Intent(getApplicationContext(),riddle.class);
                 startActivity(i);
@@ -110,7 +110,7 @@ public class riddle extends AppCompatActivity {
         hintsview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gethints();
+                getHints();
                 points=points-1;
                 hintsview.setEnabled(false);
                 hintsview.setAlpha(.5f);
@@ -122,7 +122,7 @@ public class riddle extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 points=0;
-                showanswer();
+                showAnswer();
                 passview.setAlpha(.5f);
                 passview.setEnabled(false);
                 hintsview.setEnabled(false);
@@ -130,7 +130,7 @@ public class riddle extends AppCompatActivity {
             }
         });
 
-        addtextbox();
+        addTextBox();
 
     }
 
@@ -160,9 +160,9 @@ public class riddle extends AppCompatActivity {
     }
 
 
-    public void gethints()
+    public void getHints()
     {
-        cleartextbox();
+        clearTextBox();
         EditText et;
         Set<Integer> set=new HashSet<>();
         int n=anslength/2;
@@ -171,7 +171,7 @@ public class riddle extends AppCompatActivity {
             set.add(new Random().nextInt(anslength));
         }
 
-        cleartextbox();
+        clearTextBox();
         for(int i:set)
         {
             et=(EditText)findViewById(1+i);
@@ -183,7 +183,7 @@ public class riddle extends AppCompatActivity {
     }
 
 
-    public void nextfocus(int id)
+    public void nextFocus(int id)
     {
         EditText et;
         for(int i=0;i<anslength;i++)
@@ -199,7 +199,7 @@ public class riddle extends AppCompatActivity {
         }
     }
 
-    public void showanswer()
+    public void showAnswer()
     {
         for(int i=0;i<anslength;i++)
         {
@@ -213,16 +213,16 @@ public class riddle extends AppCompatActivity {
 
 
 
-    public void setque(int id)
+    public void setQue(int id)
     {
-        Cursor cursor=db.getdata(id);
+        Cursor cursor=db.getData(id);
         que.setText(cursor.getString(1));
         qno.setText("#"+cursor.getString(0));
         ans=cursor.getString(2);
         anslength=cursor.getString(2).length();
     }
 
-    public void cleartextbox()
+    public void clearTextBox()
     {
         for(int i=0;i<anslength;i++)
         {
@@ -235,7 +235,7 @@ public class riddle extends AppCompatActivity {
     }
 
     @SuppressLint("ResourceType")
-    public void addtextbox()
+    public void addTextBox()
     {
         final String str=ans.toLowerCase();
         final RelativeLayout ll=findViewById(R.id.rl);
@@ -332,7 +332,7 @@ public class riddle extends AppCompatActivity {
                     if(s.charAt(0)==str.charAt(id-1))
                     {
                         et.setBackgroundResource(R.drawable.correct);
-                        nextfocus(et.getId());
+                        nextFocus(et.getId());
                         et.setEnabled(false);
                     }
 

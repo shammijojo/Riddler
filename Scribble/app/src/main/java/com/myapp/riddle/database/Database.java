@@ -22,7 +22,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase mydb) {
         System.out.println("hello");
-        createtable(mydb);
+        createTable(mydb);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public void createtable(SQLiteDatabase mydb)
+    public void createTable(SQLiteDatabase mydb)
     {
         String query="create table if not exists riddles(id integer PRIMARY KEY,question text NOT NULL,answer text NOT NULL);";
         mydb.execSQL(query);
@@ -43,7 +43,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public void insertdata()
+    public void insertData()
     {
         sqLiteDatabase=this.getWritableDatabase();
         try {
@@ -55,7 +55,7 @@ public class Database extends SQLiteOpenHelper {
             Log.e(TAG, "Error while initialising user table" );;}
     }
 
-    public void insertrows(int id,String question,String answer)
+    public void insertRows(int id, String question, String answer)
     {
         sqLiteDatabase=this.getWritableDatabase();
         String query="insert into riddles values("+id+",\""+question+"\",\""+answer+"\");";
@@ -63,7 +63,7 @@ public class Database extends SQLiteOpenHelper {
         Log.i(TAG, "Riddles: "+id+" inserted");
     }
 
-    public Cursor getdata(int  id)
+    public Cursor getData(int  id)
     {
         sqLiteDatabase=this.getReadableDatabase();
         Cursor res =  sqLiteDatabase.rawQuery("select * from riddles where id="+id,null);
@@ -72,7 +72,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public String getfromdb(String column)
+    public String getFromDb(String column)
     {
         sqLiteDatabase=getReadableDatabase();
         String query="select "+column+" from userinfo";
@@ -81,7 +81,7 @@ public class Database extends SQLiteOpenHelper {
         return cursor.getString(0);
     }
 
-    public void updateuserinfo(String column,int value)
+    public void updateUserInfo(String column, int value)
     {
         sqLiteDatabase=this.getWritableDatabase();
         String query="update userinfo set "+column+"="+value+" where id=1;";
@@ -90,7 +90,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public void updateusername(String column,String name)
+    public void updateUsername(String column, String name)
     {
         sqLiteDatabase=this.getWritableDatabase();
         String query="update userinfo set "+column+"='"+name+"' where id=1;";
@@ -99,7 +99,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public boolean checkfornewuser()
+    public boolean checkForNewUser()
     {
         sqLiteDatabase=getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery("select start from userinfo",null);

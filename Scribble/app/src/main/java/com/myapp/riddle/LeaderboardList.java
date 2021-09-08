@@ -16,13 +16,13 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class leaderboardlist extends ArrayAdapter<leaderboard_user> {
+public class LeaderboardList extends ArrayAdapter<leaderboard_user> {
 
     Context context;
     LayoutInflater inflater;
     ImageView image;
 
-    public leaderboardlist(@NonNull Context context, List<leaderboard_user> list) {
+    public LeaderboardList(@NonNull Context context, List<leaderboard_user> list) {
         super(context, R.layout.leaderboard_score_layout,list);
        inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

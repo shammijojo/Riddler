@@ -14,7 +14,7 @@
         <activity android:name="com.myapp.riddle.riddle"
             android:windowSoftInputMode="stateVisible"/>
 
-        <activity android:name="com.myapp.riddle.homepage" />
+        <activity android:name="com.myapp.riddle.Homepage" />
         <activity android:name="com.myapp.riddle.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

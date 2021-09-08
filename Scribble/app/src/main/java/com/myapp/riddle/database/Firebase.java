@@ -22,7 +22,7 @@ public class Firebase {
         myRef = database.getReference();
     }
 
-    public void createnewuser(String name,int imageid){
+    public void createNewUser(String name, int imageid){
         String key=myRef.push().getKey();
         myRef.child(key).child("name").setValue(name);
         myRef.child(key).child("score").setValue("0");
@@ -31,7 +31,7 @@ public class Firebase {
     }
 
 
-    public void updatescore(final String name,final int score){
+    public void updateScore(final String name, final int score){
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -53,7 +53,7 @@ public class Firebase {
     }
 
 
-    public void updatename(final String name,final String newname){
+    public void updateName(final String name, final String newname){
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -74,7 +74,7 @@ public class Firebase {
         });
     }
 
-    public void updateimageid(final String name,final int imageid){
+    public void updateImageId(final String name, final int imageid){
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

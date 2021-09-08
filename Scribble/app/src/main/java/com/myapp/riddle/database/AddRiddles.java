@@ -29,7 +29,7 @@ public class AddRiddles extends AppCompatActivity {
          if (is!=null) {
              while ((que = reader.readLine()) != null) {
                  ans=reader.readLine();
-                 db.insertrows(i,que,ans);
+                 db.insertRows(i,que,ans);
                  i++;
              }
          }

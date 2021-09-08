@@ -20,7 +20,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.myapp.riddle.R;
 import com.myapp.riddle.database.AddRiddles;
 import com.myapp.riddle.database.Database;
 import com.myapp.riddle.database.Firebase;
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final Intent intent = new Intent();
 
         db=new Database(this);
-        db.insertdata();
+        db.insertData();
 
         addRiddles=new AddRiddles();
         final Context context=getApplicationContext();
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         name=findViewById(R.id.username);
         name.clearFocus();
         next=findViewById(R.id.save);
-        name.setText(db.getfromdb("name"));
+        name.setText(db.getFromDb("name"));
 
         male = findViewById(R.id.male);
         female = findViewById(R.id.female);
@@ -84,10 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         female.setOnClickListener(this);
 
 
-        if(!db.checkfornewuser())
+        if(!db.checkForNewUser())
         {
-            selectimage();
-            Intent i=new Intent(getApplicationContext(),homepage.class);
+            selectImage();
+            Intent i=new Intent(getApplicationContext(), Homepage.class);
             i.putExtra("id",male.getId());
             startActivity(i);
         }
@@ -99,9 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(db.checkfornewuser()){
+                if(db.checkForNewUser()){
                     addRiddles.readriddles(context);
-                    db.updateuserinfo("start",1);
+                    db.updateUserInfo("start",1);
                 }
 
                 validation();
@@ -171,11 +170,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Boolean found=false;
-                Boolean newuser=true;
-                String presentname=db.getfromdb("name");
+               // Boolean newuser=true;
+                String presentName=db.getFromDb("name");
                 for(DataSnapshot data:dataSnapshot.getChildren()){
                     String uname=data.child("name").getValue().toString();
-                    if(uname.equals(name.getText().toString()) && !uname.equals(presentname)){
+                    if(uname.equals(name.getText().toString()) && !uname.equals(presentName)){
                         found=true;
                         break;
                     }
@@ -188,17 +187,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else{
 
-                    if(presentname.length()==0)
-                        firebase.createnewuser(name.getText().toString(),picid);
+                    if(presentName.length()==0)
+                        firebase.createNewUser(name.getText().toString(),picid);
                     else {
-                        firebase.updatename(presentname, name.getText().toString());
-                        firebase.updateimageid(name.getText().toString(), picid);
-                        firebase.updatescore("score",Integer.parseInt(db.getfromdb("score")));
+                        firebase.updateName(presentName, name.getText().toString());
+                        firebase.updateImageId(name.getText().toString(), picid);
+                        firebase.updateScore("score",Integer.parseInt(db.getFromDb("score")));
                     }
 
-                    db.updateusername("name", name.getText().toString());
-                    db.updateuserinfo("pic", picid);
-                    Intent i=new Intent(getApplicationContext(),homepage.class);
+                    db.updateUsername("name", name.getText().toString());
+                    db.updateUserInfo("pic", picid);
+                    Intent i=new Intent(getApplicationContext(), Homepage.class);
                     i.putExtra("id",picid);
                     startActivity(i);
                 }
@@ -212,8 +211,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void selectimage(){
-        int id=Integer.parseInt(db.getfromdb("pic"));
+    public void selectImage(){
+        int id=Integer.parseInt(db.getFromDb("pic"));
         ImageView imageView=(ImageView)findViewById(id);
         imageView.setAlpha(.5f);
     }

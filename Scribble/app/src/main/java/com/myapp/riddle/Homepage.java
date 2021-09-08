@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.myapp.riddle.database.Database;
 
-public class homepage extends AppCompatActivity {
+public class Homepage extends AppCompatActivity {
 
     ImageView imageview;
     Button b,changeb;
@@ -29,10 +29,10 @@ public class homepage extends AppCompatActivity {
         changeb=(Button)findViewById(R.id.changebutton);
 
         db=new Database(this);
-        String id=db.getfromdb("pic");
+        String id=db.getFromDb("pic");
         setImage(Integer.parseInt(id));
 
-        if(Integer.parseInt(db.getfromdb("level"))==1)
+        if(Integer.parseInt(db.getFromDb("level"))==1)
             b.setText("START THE GAME");
         else{
             b.setText("CONTINUE THE GAME");
@@ -84,7 +84,7 @@ public class homepage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(homepage.this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(Homepage.this);
         builder1.setMessage("Are you sure to exit?");
         builder1.setCancelable(true);
 
