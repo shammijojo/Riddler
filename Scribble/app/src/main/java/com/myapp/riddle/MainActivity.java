@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 if(db.checkForNewUser()){
-                    addRiddles.readriddles(context);
+                    addRiddles.readRiddles(context);
                     db.updateUserInfo("start",1);
                 }
 

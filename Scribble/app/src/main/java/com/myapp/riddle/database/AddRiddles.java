@@ -17,7 +17,7 @@ import static android.content.ContentValues.TAG;
 public class AddRiddles extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void readriddles(Context context)
+    public void readRiddles(Context context)
     {
         Database db=new Database(context);
         int i=1;
