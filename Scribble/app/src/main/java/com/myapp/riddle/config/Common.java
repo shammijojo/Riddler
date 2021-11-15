@@ -13,6 +13,8 @@ import com.myapp.riddle.database.Firebase;
 
 public class Common {
 
+
+
     public boolean validateCompletion(Activity activity){
         if(Integer.parseInt(new Database(activity).getFromDb("level"))>Constants.TOTAL_QUE){
             activity.finish();

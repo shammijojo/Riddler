@@ -3,9 +3,6 @@ package com.myapp.riddle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,10 +26,10 @@ import java.util.List;
 
 public class Leaderboard extends AppCompatActivity {
 
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
-    List<leaderboard_user> list;
+    List<leaderboard_user> leaderboardUsers;
     ListView listView;
     Database db;
     Firebase firebase;
@@ -42,23 +39,23 @@ public class Leaderboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
 
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        list=new ArrayList<>();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+        leaderboardUsers =new ArrayList<>();
         db=new Database(this);
         firebase=new Firebase();
 
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list.clear();
+                leaderboardUsers.clear();
                 for(DataSnapshot data:dataSnapshot.getChildren()){
                     leaderboard_user leaderboard_user=new leaderboard_user();
                     leaderboard_user.setUsername(data.child("name").getValue().toString());
                     leaderboard_user.setScore(data.child("score").getValue().toString());
                     leaderboard_user.setImageId(Integer.parseInt(data.child("image").getValue().toString()));
-                    list.add(leaderboard_user);
+                    leaderboardUsers.add(leaderboard_user);
                 }
 
 
@@ -72,9 +69,9 @@ public class Leaderboard extends AppCompatActivity {
                     }
                 };
 
-                Collections.sort(list,compareByScore);
+                Collections.sort(leaderboardUsers,compareByScore);
 
-                LeaderboardList adapter=new LeaderboardList(Leaderboard.this,list);
+                LeaderboardList adapter=new LeaderboardList(Leaderboard.this, leaderboardUsers);
                 listView=findViewById(R.id.list);
                 listView.setAdapter(adapter);
 

@@ -66,23 +66,23 @@ public class Homepage extends AppCompatActivity {
     private void setImage(int id)
     {
         switch(id){
-            case R.id.male:
-                avatarImage.setImageResource(R.drawable.dp1);
+            case R.id.girl:
+                avatarImage.setImageResource(R.drawable.girl);
                 break;
-            case R.id.female:
-                avatarImage.setImageResource(R.drawable.dp6);
+            case R.id.joker:
+                avatarImage.setImageResource(R.drawable.joker);
                 break;
-            case R.id.id1:
-                avatarImage.setImageResource(R.drawable.dp2);
+            case R.id.dog:
+                avatarImage.setImageResource(R.drawable.dog);
                 break;
-            case R.id.id2:
-                avatarImage.setImageResource(R.drawable.dp3);
+            case R.id.frog:
+                avatarImage.setImageResource(R.drawable.frog);
                 break;
-            case R.id.id3:
-                avatarImage.setImageResource(R.drawable.dp4);
+            case R.id.boy:
+                avatarImage.setImageResource(R.drawable.boy);
                 break;
-            case R.id.id4:
-                avatarImage.setImageResource(R.drawable.dp5);
+            case R.id.elf:
+                avatarImage.setImageResource(R.drawable.elf);
                 break;
         }
     }

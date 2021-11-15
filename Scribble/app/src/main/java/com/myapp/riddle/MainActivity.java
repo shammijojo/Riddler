@@ -66,12 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         next=findViewById(R.id.save);
         name.setText(db.getFromDb("name"));
 
-        male = findViewById(R.id.male);
-        female = findViewById(R.id.female);
-        id1 = findViewById(R.id.id1);
-        id2 = findViewById(R.id.id2);
-        id3 = findViewById(R.id.id3);
-        id4 = findViewById(R.id.id4);
+        male = findViewById(R.id.girl);
+        female = findViewById(R.id.joker);
+        id1 = findViewById(R.id.dog);
+        id2 = findViewById(R.id.frog);
+        id3 = findViewById(R.id.boy);
+        id4 = findViewById(R.id.elf);
 
         picid=male.getId();
 

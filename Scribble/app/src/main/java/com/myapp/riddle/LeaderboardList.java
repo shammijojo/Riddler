@@ -47,23 +47,23 @@ public class LeaderboardList extends ArrayAdapter<leaderboard_user> {
     private void setImage(int id)
     {
         switch(id){
-            case R.id.male:
-                image.setImageResource(R.drawable.dp1);
+            case R.id.girl:
+                image.setImageResource(R.drawable.girl);
                 break;
-            case R.id.female:
-                image.setImageResource(R.drawable.dp6);
+            case R.id.joker:
+                image.setImageResource(R.drawable.joker);
                 break;
-            case R.id.id1:
-                image.setImageResource(R.drawable.dp2);
+            case R.id.dog:
+                image.setImageResource(R.drawable.dog);
                 break;
-            case R.id.id2:
-                image.setImageResource(R.drawable.dp3);
+            case R.id.frog:
+                image.setImageResource(R.drawable.frog);
                 break;
-            case R.id.id3:
-                image.setImageResource(R.drawable.dp4);
+            case R.id.boy:
+                image.setImageResource(R.drawable.boy);
                 break;
-            case R.id.id4:
-                image.setImageResource(R.drawable.dp5);
+            case R.id.elf:
+                image.setImageResource(R.drawable.elf);
                 break;
         }
     }

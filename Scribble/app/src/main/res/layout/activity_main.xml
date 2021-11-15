@@ -8,77 +8,77 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/female"
+        android:id="@+id/joker"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/male"
+        app:layout_constraintRight_toLeftOf="@+id/girl"
         android:layout_marginTop="40dp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/dp6"
+        app:srcCompat="@drawable/joker"
          />
 
     <ImageButton
-        android:id="@+id/male"
+        android:id="@+id/girl"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/female"
-        app:layout_constraintRight_toLeftOf="@+id/id1"
+        app:layout_constraintLeft_toRightOf="@+id/joker"
+        app:layout_constraintRight_toLeftOf="@+id/dog"
         android:layout_marginTop="40dp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/dp1" />
+        app:srcCompat="@drawable/girl" />
 
     <ImageButton
-        android:id="@+id/id1"
+        android:id="@+id/dog"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/male"
+        app:layout_constraintLeft_toRightOf="@+id/girl"
         android:layout_marginTop="40dp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/dp2" />
+        app:srcCompat="@drawable/dog" />
 
     <ImageButton
-        android:id="@+id/id2"
+        android:id="@+id/frog"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@+id/female"
+        app:layout_constraintTop_toBottomOf="@+id/joker"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="20dp"
-        app:layout_constraintRight_toLeftOf="@+id/id3"
+        app:layout_constraintRight_toLeftOf="@+id/boy"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/dp3" />
+        app:srcCompat="@drawable/frog" />
 
     <ImageButton
-        android:id="@+id/id3"
+        android:id="@+id/boy"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintLeft_toRightOf="@+id/id2"
-        app:layout_constraintRight_toLeftOf="@+id/id4"
-        app:layout_constraintTop_toBottomOf="@id/female"
+        app:layout_constraintLeft_toRightOf="@+id/frog"
+        app:layout_constraintRight_toLeftOf="@+id/elf"
+        app:layout_constraintTop_toBottomOf="@id/joker"
         android:layout_marginTop="20dp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/dp4" />
+        app:srcCompat="@drawable/boy" />
 
     <ImageButton
-        android:id="@+id/id4"
+        android:id="@+id/elf"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/id1"
+        app:layout_constraintTop_toBottomOf="@id/dog"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="20dp"
-        app:layout_constraintLeft_toRightOf="@+id/id3"
+        app:layout_constraintLeft_toRightOf="@+id/boy"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/dp5" />
+        app:srcCompat="@drawable/elf" />
 
     <EditText
         android:id="@+id/editText"
@@ -97,8 +97,8 @@
         android:id="@+id/username"
         android:layout_width="200dp"
         android:layout_height="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/id4"
-        app:layout_constraintLeft_toLeftOf="@id/id2"
+        app:layout_constraintTop_toBottomOf="@+id/elf"
+        app:layout_constraintLeft_toLeftOf="@id/frog"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="50dp"
         android:maxLength="30"
