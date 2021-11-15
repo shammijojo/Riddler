@@ -10,6 +10,7 @@ public class Constants {
 
     public static  final Integer TOTAL_QUE=59;
     public static final String ID="id";
+    public static final String FILENAME="riddles.txt";
 
     public static final String LEVEL="level";
     public static final String NAME="name";

@@ -1,13 +1,7 @@
 package com.myapp.riddle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -20,16 +14,20 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.myapp.riddle.config.Common;
-import com.myapp.riddle.config.Constants;
-import com.myapp.riddle.database.AddRiddles;
-import com.myapp.riddle.database.Database;
-import com.myapp.riddle.database.Firebase;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.myapp.riddle.config.Common;
+import com.myapp.riddle.config.Constants;
+import com.myapp.riddle.database.AddRiddles;
+import com.myapp.riddle.database.Database;
+import com.myapp.riddle.database.Firebase;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 

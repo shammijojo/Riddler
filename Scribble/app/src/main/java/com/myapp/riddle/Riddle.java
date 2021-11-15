@@ -49,12 +49,12 @@ public class Riddle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riddle);
 
-        hintsView =findViewById(R.id.hintsview);
-        passView =findViewById(R.id.passview);
-        scoreBox1 =findViewById(R.id.scorebox1);
-        scoreBox2 =findViewById(R.id.scorebox2);
-        scoreBox3 =findViewById(R.id.scorebox3);
-        qno=findViewById(R.id.number);
+        hintsView = findViewById(R.id.hintsview);
+        passView = findViewById(R.id.passview);
+        scoreBox1 = findViewById(R.id.scoreBox1);
+        scoreBox2 = findViewById(R.id.scoreBox2);
+        scoreBox3 = findViewById(R.id.scoreBox3);
+        qno = findViewById(R.id.queNumber);
 
         Common common=new Common();
         db=common.getDatabaseObject(getApplicationContext());
@@ -162,8 +162,7 @@ public class Riddle extends AppCompatActivity {
         }
 
         clearTextBox();
-        for(int i:set)
-        {
+        for(int i:set) {
             et=(EditText)findViewById(1+i);
             et.setText(ans.substring(i,i+1));
             et.invalidate();
@@ -225,26 +224,26 @@ public class Riddle extends AppCompatActivity {
         final RelativeLayout ll=findViewById(R.id.rl);
         int t=20;
         for(int i = 0; i< ansLength; i++) {
-            final EditText et = new EditText(this);
+            final EditText editText = new EditText(this);
             RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             p.leftMargin=t;
             p.topMargin=50;
-            et.setLayoutParams(p);
-            et.setSingleLine(true);
-            et.setCursorVisible(false);
-            et.setId(1+i);
-            et.setMaxLines(1);
-            et.setWidth(100);
-            et.setHeight(100);
-            et.setPadding(40,0,0,0);
-            et.setBackgroundResource(R.drawable.rect);
+            editText.setLayoutParams(p);
+            editText.setSingleLine(true);
+            editText.setCursorVisible(false);
+            editText.setId(1+i);
+            editText.setMaxLines(1);
+            editText.setWidth(100);
+            editText.setHeight(100);
+            editText.setPadding(40,0,0,0);
+            editText.setBackgroundResource(R.drawable.rect);
             if(i==0){
-                et.requestFocus();
-                et.setAlpha(.5f);
+                editText.requestFocus();
+                editText.setAlpha(.5f);
             }
             //et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
 
-            et.setFilters(new InputFilter[]{
+            editText.setFilters(new InputFilter[]{
                     new InputFilter() {
                         @Override
                         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
@@ -257,39 +256,39 @@ public class Riddle extends AppCompatActivity {
                     },new InputFilter.LengthFilter(1)
 
             });
-            ll.addView(et, p);
+            ll.addView(editText, p);
 
             t=t+120;
             //et.setPadding(0,0,0,20);
 
-            et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if(hasFocus)
-                        et.getText().clear();
+                        editText.getText().clear();
                 }
             });
 
 
-            et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if(hasFocus==true)
-                        et.setAlpha(.5f);
+                        editText.setAlpha(.5f);
                     else
-                        et.setAlpha(1f);
+                        editText.setAlpha(1f);
                 }
             });
 
-            et.setOnClickListener(new View.OnClickListener() {
+            editText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    et.setSelection(et.getText().length());
+                    editText.setSelection(editText.getText().length());
                 }
             });
 
 
-            et.addTextChangedListener(new TextWatcher() {
+            editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -299,7 +298,7 @@ public class Riddle extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     String ans="";
-                    int id=et.getId();
+                    int id=editText.getId();
 
                     for(int i = 0; i< ansLength; i++) {
                         EditText text=findViewById(1+i);
@@ -309,9 +308,9 @@ public class Riddle extends AppCompatActivity {
 
                     if(s.length()>0)
                     if(s.charAt(0)==str.charAt(id-1)) {
-                        et.setBackgroundResource(R.drawable.correct);
-                        nextFocus(et.getId());
-                        et.setEnabled(false);
+                        editText.setBackgroundResource(R.drawable.correct);
+                        nextFocus(editText.getId());
+                        editText.setEnabled(false);
                     }
 
                     if(ans.equals(str)) {

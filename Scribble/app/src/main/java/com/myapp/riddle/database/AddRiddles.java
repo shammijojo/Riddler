@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import static android.content.ContentValues.TAG;
 
+import com.myapp.riddle.config.Constants;
+
 public class AddRiddles extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -23,7 +25,7 @@ public class AddRiddles extends AppCompatActivity {
         int i=1;
      try{
          String que="",ans="";
-         InputStream is = context.getAssets().open("riddles.txt");
+         InputStream is = context.getAssets().open(Constants.FILENAME);
          BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 
          if (is!=null) {

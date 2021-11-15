@@ -29,9 +29,9 @@ public class Homepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-        avatarImage =(ImageView)findViewById(R.id.imageView2);
-        startGameButton =(Button)findViewById(R.id.button);
-        changeAvatarButton =(Button)findViewById(R.id.changebutton);
+        avatarImage =(ImageView)findViewById(R.id.profilePic);
+        startGameButton =(Button)findViewById(R.id.startGame);
+        changeAvatarButton =(Button)findViewById(R.id.changeAvatar);
 
         db=new Database(this);
         String picId=db.getFromDb(Constants.PIC);

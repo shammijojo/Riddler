@@ -30,9 +30,9 @@ public class LeaderboardList extends ArrayAdapter<leaderboard_user> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
     View view=inflater.inflate(R.layout.leaderboard_score_layout,null,true);
-    TextView name=(TextView)view.findViewById(R.id.lbname);
+    TextView name=(TextView)view.findViewById(R.id.userName);
     TextView score=(TextView)view.findViewById(R.id.score);
-    image=(ImageView)view.findViewById(R.id.dp);
+    image=(ImageView)view.findViewById(R.id.profilePic);
 
     leaderboard_user leaderboard_user=getItem(position);
     name.setText(leaderboard_user.getUsername());

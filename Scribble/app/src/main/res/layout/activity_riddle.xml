@@ -20,7 +20,7 @@
 
 
     <TextView
-        android:id="@+id/number"
+        android:id="@+id/queNumber"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed-medium"
-        app:layout_constraintTop_toBottomOf="@id/number"
+        app:layout_constraintTop_toBottomOf="@id/queNumber"
         android:layout_marginLeft="5dp"
         android:textSize="30dp"
         android:background="@drawable/ques"
@@ -88,65 +88,6 @@
         android:src="@drawable/nexr"
         />
 
-
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/next"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent">-->
-
-
-<!--        <View-->
-<!--            android:id="@+id/vline"-->
-<!--            android:layout_width="5dp"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:background="#181ec9"/>-->
-
-<!--        <View-->
-<!--            android:id="@+id/hintview"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="100dp"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintRight_toLeftOf="@id/vline"-->
-<!--            />-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:layout_constraintLeft_toLeftOf="@id/hintview"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            android:src="@drawable/pass"/>-->
-
-
-
-
-
-<!--        <View-->
-<!--            android:id="@+id/pasview"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="100dp"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintLeft_toRightOf="@id/vline"-->
-<!--            />-->
-
-
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:layout_constraintLeft_toLeftOf="@id/vline"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            android:src="@drawable/hints"/>-->
-
-
-
-
-
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
     <RelativeLayout
         android:id="@+id/options"
         android:layout_width="match_parent"
@@ -171,14 +112,14 @@
             />
 
         <ImageView
-            android:id="@+id/hintspic"
+            android:id="@+id/hintsPic"
             android:layout_width="40dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/hints" />
 
         <TextView
-            android:id="@+id/hintstext"
+            android:id="@+id/hintsText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
@@ -206,7 +147,7 @@
             android:clickable="true"/>
 
         <ImageView
-            android:id="@+id/passpic"
+            android:id="@+id/passPic"
             android:layout_width="35dp"
             android:layout_height="45dp"
             android:layout_alignTop="@+id/passview"
@@ -215,7 +156,7 @@
 
 
         <TextView
-            android:id="@+id/passtext"
+            android:id="@+id/passText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/passview"
@@ -247,7 +188,7 @@
 
 
         <ImageView
-            android:id="@+id/scorepic"
+            android:id="@+id/scorePic"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="3dp"
@@ -259,7 +200,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/scorepic"
+            app:layout_constraintLeft_toRightOf="@id/scorePic"
             android:layout_marginLeft="10dp"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="10dp"
@@ -270,12 +211,12 @@
 
 
         <TextView
-            android:id="@+id/scorebox1"
+            android:id="@+id/scoreBox1"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/scorepic"
+            app:layout_constraintTop_toBottomOf="@id/scorePic"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/scorebox2"
+            app:layout_constraintRight_toLeftOf="@+id/scoreBox2"
             android:background="@drawable/rect"
             android:text="1"
             android:textSize="100dp"
@@ -284,12 +225,12 @@
 
 
     <TextView
-        android:id="@+id/scorebox2"
+        android:id="@+id/scoreBox2"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/scorepic"
-        app:layout_constraintLeft_toRightOf="@+id/scorebox1"
-        app:layout_constraintRight_toLeftOf="@+id/scorebox3"
+        app:layout_constraintTop_toBottomOf="@id/scorePic"
+        app:layout_constraintLeft_toRightOf="@+id/scoreBox1"
+        app:layout_constraintRight_toLeftOf="@+id/scoreBox3"
         android:layout_marginLeft="5dp"
         android:background="@drawable/rect"
         android:text="1"
@@ -298,11 +239,11 @@
         />
 
         <TextView
-            android:id="@+id/scorebox3"
+            android:id="@+id/scoreBox3"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/scorepic"
-            app:layout_constraintLeft_toRightOf="@+id/scorebox2"
+            app:layout_constraintTop_toBottomOf="@id/scorePic"
+            app:layout_constraintLeft_toRightOf="@+id/scoreBox2"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginLeft="5dp"
             android:background="@drawable/rect"
