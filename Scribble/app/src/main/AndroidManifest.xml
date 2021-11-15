@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.myapp.riddle.Leaderboard" />
 
-        <activity android:name="com.myapp.riddle.riddle"
+        <activity android:name="com.myapp.riddle.Riddle"
             android:windowSoftInputMode="stateVisible"/>
 
         <activity android:name="com.myapp.riddle.Homepage" />

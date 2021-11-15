@@ -1,8 +1,6 @@
 package com.myapp.riddle;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -24,6 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.myapp.riddle.config.Common;
 import com.myapp.riddle.database.Database;
 import com.myapp.riddle.database.Firebase;
 
@@ -31,7 +30,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class riddle extends AppCompatActivity {
+public class Riddle extends AppCompatActivity {
 
     pl.droidsonroids.gif.GifImageView gifImageView;
     ImageView correctimageview,pass;
@@ -92,11 +91,6 @@ public class riddle extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i=null;
-                if(Integer.parseInt(db.getFromDb("level"))==3){
-                    i = new Intent(getApplicationContext(), Leaderboard.class);
-                    startActivity(i);
-                    return;
-                }
 
                 String currentscore=db.getFromDb("score");
                 points=Integer.parseInt(currentscore)+points;
@@ -104,8 +98,12 @@ public class riddle extends AppCompatActivity {
                 db.updateUserInfo("score",points);
                 firebase.updateScore(db.getFromDb("name"),points);
                 finish();
-                i=new Intent(getApplicationContext(),riddle.class);
-                startActivity(i);
+                if(new Common().validateCompletion(Riddle.this))
+                    return;
+                else {
+                    i = new Intent(getApplicationContext(), Riddle.class);
+                    startActivity(i);
+                }
             }
         });
 
@@ -150,46 +148,8 @@ public class riddle extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         System.out.println(item.getTitle());
-        if(item.getTitle().toString().equals("Leaderboard")){
-            Intent i=new Intent(getApplicationContext(),Leaderboard.class);
-            startActivity(i);
-        }
-        else if(item.getTitle().toString().equals("Exit")){
-            moveTaskToBack(true);
-            System.exit(0);
-        }
-        else if(item.getTitle().toString().equals("Restart Game")){
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(riddle.this);
-            builder1.setMessage("Are you sure to restart?");
-            builder1.setCancelable(true);
+        return new Common().createAlertDialog(Riddle.this,item,db);
 
-            builder1.setPositiveButton(
-                    "Yes",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                            db.updateUserInfo("level",1);
-                            db.updateUserInfo("score",0);
-                            firebase.updateScore(db.getFromDb("name"),0);
-                            Intent i=new Intent(getApplicationContext(),Homepage.class);
-                            startActivity(i);
-                        }
-                    });
-
-            builder1.setNegativeButton(
-                    "No",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
-
-        }
-
-        return true;
     }
 
 

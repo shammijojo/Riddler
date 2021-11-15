@@ -3,14 +3,14 @@ package com.myapp.riddle.Model;
 public class leaderboard_user {
     private String username;
     private String score;
-    private int imageid;
+    private int imageId;
 
-    public int getImageid() {
-        return imageid;
+    public int getImageId() {
+        return imageId;
     }
 
-    public void setImageid(int imageid) {
-        this.imageid = imageid;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
     public String getUsername() {

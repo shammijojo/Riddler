@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.myapp.riddle.R;
 import com.myapp.riddle.Model.leaderboard_user;
 
 import java.util.List;
@@ -39,7 +38,7 @@ public class LeaderboardList extends ArrayAdapter<leaderboard_user> {
     leaderboard_user leaderboard_user=getItem(position);
     name.setText(leaderboard_user.getUsername());
     score.setText(leaderboard_user.getScore());
-    setImage(leaderboard_user.getImageid());
+    setImage(leaderboard_user.getImageId());
 
     return view;
     }
