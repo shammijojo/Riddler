@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.myapp.riddle.config.Constants;
 
 import androidx.annotation.NonNull;
 
@@ -14,33 +15,33 @@ import static android.content.ContentValues.TAG;
 
 public class Firebase {
 
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
 
     public Firebase(){
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
     }
 
     public void createNewUser(String name, int imageid){
-        String key=myRef.push().getKey();
-        myRef.child(key).child("name").setValue(name);
-        myRef.child(key).child("score").setValue("0");
-        myRef.child(key).child("image").setValue(imageid);
+        String key= databaseReference.push().getKey();
+        databaseReference.child(key).child(Constants.NAME).setValue(name);
+        databaseReference.child(key).child(Constants.SCORE).setValue("0");
+        databaseReference.child(key).child(Constants.IMAGE).setValue(imageid);
         Log.i(TAG,"FIREBASE:New User Registered:"+name);
     }
 
 
     public void updateScore(final String name, final int score){
 
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data:dataSnapshot.getChildren()){
-                    String username=data.child("name").getValue().toString();
+                    String username=data.child(Constants.NAME).getValue().toString();
                     if(username.equals(name)) {
-                        data.child("score").getRef().setValue(score);
-                        Log.i(TAG,"FIREBASE:score updatd for "+name);
+                        data.child(Constants.SCORE).getRef().setValue(score);
+                        Log.i(TAG,"FIREBASE:Score updated for "+name);
                     }
                 }
             }
@@ -55,14 +56,14 @@ public class Firebase {
 
     public void updateName(final String name, final String newname){
 
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data:dataSnapshot.getChildren()){
-                    String username=data.child("name").getValue().toString();
+                    String username=data.child(Constants.NAME).getValue().toString();
                     if(username.equals(name)) {
-                        data.child("name").getRef().setValue(newname);
-                        Log.i(TAG, "FIREBASE:Name updatd to " + newname + " from " + name);
+                        data.child(Constants.NAME).getRef().setValue(newname);
+                        Log.i(TAG, "FIREBASE:Name updated to " + newname + " from " + name);
                     }
                 }
             }
@@ -75,14 +76,14 @@ public class Firebase {
     }
 
     public void updateImageId(final String name, final int imageid){
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data:dataSnapshot.getChildren()){
-                    String username=data.child("name").getValue().toString();
+                    String username=data.child(Constants.NAME).getValue().toString();
                     if(username.equals(name)) {
-                        data.child("image").getRef().setValue(imageid);
-                        Log.i(TAG,"FIREBASE:dp updatd for "+name);
+                        data.child(Constants.IMAGE).getRef().setValue(imageid);
+                        Log.i(TAG,"FIREBASE:Profile pic updated for "+name);
                     }
                 }
             }

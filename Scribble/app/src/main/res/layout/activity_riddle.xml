@@ -170,23 +170,23 @@
             android:clickable="true"
             />
 
-         <ImageView
-             android:id="@+id/hintspic"
-             android:layout_marginTop="5dp"
-             android:layout_width="40dp"
-             android:layout_height="50dp"
-             android:src="@drawable/hints"/>
+        <ImageView
+            android:id="@+id/hintspic"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/hints" />
 
-          <TextView
-              android:id="@+id/hintstext"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="60dp"
-              android:layout_marginTop="10dp"
-              android:text="HINTS"
-              android:textStyle="bold"
-              android:fontFamily="sans-serif-condensed-light"
-              android:textSize="30dp"/>
+        <TextView
+            android:id="@+id/hintstext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:text="HINTS"
+            android:textSize="30dp"
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/hzline2"
@@ -207,12 +207,11 @@
 
         <ImageView
             android:id="@+id/passpic"
-            android:layout_alignTop="@+id/passview"
-            android:layout_marginTop="3dp"
             android:layout_width="35dp"
             android:layout_height="45dp"
-            android:src="@drawable/pass"/>
-
+            android:layout_alignTop="@+id/passview"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/pass" />
 
 
         <TextView
@@ -222,10 +221,10 @@
             android:layout_alignTop="@+id/passview"
             android:layout_marginLeft="60dp"
             android:layout_marginTop="8dp"
-            android:text="PASS"
-            android:textStyle="bold"
             android:fontFamily="sans-serif-condensed-light"
-            android:textSize="30dp"/>
+            android:text="PASS"
+            android:textSize="30dp"
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/hzline3"

@@ -91,11 +91,11 @@ public class Homepage extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Homepage.this);
-        alertDialogBuilder.setMessage("Are you sure to exit?");
+        alertDialogBuilder.setMessage(Constants.CONFIRM_EXIT);
         alertDialogBuilder.setCancelable(true);
 
         alertDialogBuilder.setPositiveButton(
-                "Yes",
+                Constants.YES,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -105,7 +105,7 @@ public class Homepage extends AppCompatActivity {
                 });
 
         alertDialogBuilder.setNegativeButton(
-                "No",
+                Constants.NO,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

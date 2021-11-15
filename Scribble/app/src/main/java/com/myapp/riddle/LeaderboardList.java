@@ -8,16 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.myapp.riddle.Model.leaderboard_user;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 public class LeaderboardList extends ArrayAdapter<leaderboard_user> {
 
-    Context context;
     LayoutInflater inflater;
     ImageView image;
 

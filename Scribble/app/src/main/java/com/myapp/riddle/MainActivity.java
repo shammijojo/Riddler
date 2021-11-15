@@ -5,11 +5,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.myapp.riddle.config.Common;
+import com.myapp.riddle.config.Constants;
 import com.myapp.riddle.database.AddRiddles;
 import com.myapp.riddle.database.Database;
 import com.myapp.riddle.database.Firebase;
@@ -31,18 +33,18 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    ImageButton male,female,id1,id2,id3,id4;
+    ImageButton girl, joker, dog, frog, boy, elf;
     EditText name;
     static Button next;
-    String gender;
-    int picid;
-    Database db;
+    int picId;
     AddRiddles addRiddles;
-    SQLiteDatabase sqLiteDatabase;
+    Database db;
     Firebase firebase;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
+    private final Activity CURRENT_ACTIVITY=MainActivity.this;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -51,56 +53,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Intent intent = new Intent();
+        Common common=new Common();
+        db=common.getDatabaseObject(getApplicationContext());
+        firebase=common.getFirebaseObject();
 
-        db=new Database(this);
         db.insertData();
 
         addRiddles=new AddRiddles();
-        final Context context=getApplicationContext();
-
-        firebase=new Firebase();
-
         name=findViewById(R.id.username);
         name.clearFocus();
         next=findViewById(R.id.save);
-        name.setText(db.getFromDb("name"));
+        name.setText(db.getFromDb(Constants.NAME));
 
-        male = findViewById(R.id.girl);
-        female = findViewById(R.id.joker);
-        id1 = findViewById(R.id.dog);
-        id2 = findViewById(R.id.frog);
-        id3 = findViewById(R.id.boy);
-        id4 = findViewById(R.id.elf);
+        girl = findViewById(R.id.girl);
+        joker = findViewById(R.id.joker);
+        dog = findViewById(R.id.dog);
+        frog = findViewById(R.id.frog);
+        boy = findViewById(R.id.boy);
+        elf = findViewById(R.id.elf);
 
-        picid=male.getId();
+        picId = girl.getId();
 
-        id1.setOnClickListener(this);
-        id2.setOnClickListener(this);
-        id3.setOnClickListener(this);
-        id4.setOnClickListener(this);
-        male.setOnClickListener(this);
-        female.setOnClickListener(this);
+        dog.setOnClickListener(this);
+        frog.setOnClickListener(this);
+        boy.setOnClickListener(this);
+        elf.setOnClickListener(this);
+        girl.setOnClickListener(this);
+        joker.setOnClickListener(this);
 
 
         if(!db.checkForNewUser())
         {
             selectImage();
             Intent i=new Intent(getApplicationContext(), Homepage.class);
-            i.putExtra("id",male.getId());
+            i.putExtra(Constants.ID, girl.getId());
             startActivity(i);
         }
         else{
-            picid=male.getId();
-            male.setAlpha(.5f);
+            picId = girl.getId();
+            girl.setAlpha(.5f);
         }
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(db.checkForNewUser()){
-                    addRiddles.readRiddles(context);
-                    db.updateUserInfo("start",1);
+                    addRiddles.readRiddles(MainActivity.this);
+                    db.updateUserInfo(Constants.START,1);
                 }
 
                 validation();
@@ -114,12 +113,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        ImageButton[] imageButtons=new ImageButton[]{id1,id2,id3,id4,male,female};
+        ImageButton[] imageButtons=new ImageButton[]{dog, frog, boy, elf, girl, joker};
         for(ImageButton ib:imageButtons)
         {
             if(ib.getId()==v.getId()) {
                 ib.setAlpha(.5f);
-                picid=ib.getId();
+                picId =ib.getId();
             }
             else
                 ib.setAlpha(1f);
@@ -170,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Boolean found=false;
-               // Boolean newuser=true;
                 String presentName=db.getFromDb("name");
                 for(DataSnapshot data:dataSnapshot.getChildren()){
                     String uname=data.child("name").getValue().toString();
@@ -188,17 +186,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else{
 
                     if(presentName.length()==0)
-                        firebase.createNewUser(name.getText().toString(),picid);
+                        firebase.createNewUser(name.getText().toString(), picId);
                     else {
                         firebase.updateName(presentName, name.getText().toString());
-                        firebase.updateImageId(name.getText().toString(), picid);
-                        firebase.updateScore("score",Integer.parseInt(db.getFromDb("score")));
+                        firebase.updateImageId(name.getText().toString(), picId);
+                        firebase.updateScore(Constants.SCORE,Integer.parseInt(db.getFromDb(Constants.SCORE)));
                     }
 
-                    db.updateUsername("name", name.getText().toString());
-                    db.updateUserInfo("pic", picid);
+                    db.updateUsername(Constants.NAME, name.getText().toString());
+                    db.updateUserInfo(Constants.PIC, picId);
                     Intent i=new Intent(getApplicationContext(), Homepage.class);
-                    i.putExtra("id",picid);
+                    i.putExtra(Constants.ID, picId);
                     startActivity(i);
                 }
             }
@@ -212,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void selectImage(){
-        int id=Integer.parseInt(db.getFromDb("pic"));
+        int id=Integer.parseInt(db.getFromDb(Constants.PIC));
         ImageView imageView=(ImageView)findViewById(id);
         imageView.setAlpha(.5f);
     }

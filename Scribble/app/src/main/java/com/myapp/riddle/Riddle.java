@@ -1,6 +1,7 @@
 package com.myapp.riddle;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -14,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +23,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.myapp.riddle.config.Common;
+import com.myapp.riddle.config.Constants;
 import com.myapp.riddle.database.Database;
 import com.myapp.riddle.database.Firebase;
 
@@ -32,71 +33,71 @@ import java.util.Set;
 
 public class Riddle extends AppCompatActivity {
 
-    pl.droidsonroids.gif.GifImageView gifImageView;
-    ImageView correctimageview,pass;
-    ImageButton next;
-    View hintsview,passview;
-    TextView que,score1,score2,score3,qno;
+    ImageView next;
+    View hintsView, passView;
+    TextView que, scoreBox1, scoreBox2, scoreBox3,qno;
+    String ans;
+    int points=3;
+    int ansLength;
     Database db;
-    String quetn,ans;
-    int level,points=3;
-    static int queno=0;
-    int anslength;
     Firebase firebase;
+
+    private final Activity CURRENT_ACTIVITY=Riddle.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riddle);
 
-        hintsview=findViewById(R.id.hintsview);
-        passview=findViewById(R.id.passview);
-        score1=findViewById(R.id.scorebox1);
-        score2=findViewById(R.id.scorebox2);
-        score3=findViewById(R.id.scorebox3);
+        hintsView =findViewById(R.id.hintsview);
+        passView =findViewById(R.id.passview);
+        scoreBox1 =findViewById(R.id.scorebox1);
+        scoreBox2 =findViewById(R.id.scorebox2);
+        scoreBox3 =findViewById(R.id.scorebox3);
         qno=findViewById(R.id.number);
 
-        firebase=new Firebase();
+        Common common=new Common();
+        db=common.getDatabaseObject(getApplicationContext());
+        firebase=common.getFirebaseObject();
 
-        correctimageview=findViewById(R.id.next);
-        correctimageview.setEnabled(false);
-        correctimageview.setAlpha(.5f);
+        next =findViewById(R.id.next);
+        next.setEnabled(false);
+        next.setAlpha(.5f);
         que=findViewById(R.id.que);
         db=new Database(this);
 
-        final int level=Integer.parseInt(db.getFromDb("level"));
+        final int level=Integer.parseInt(db.getFromDb(Constants.LEVEL));
         setQue(level);
 
-        String cscore=db.getFromDb("score");
-        if(Integer.parseInt(cscore)<10)
+        String currentScore=db.getFromDb(Constants.SCORE);
+        if(Integer.parseInt(currentScore)<10)
         {
-            score1.setText("0");
-            score2.setText("0");
-            score3.setText(cscore);
+            scoreBox1.setText("0");
+            scoreBox2.setText("0");
+            scoreBox3.setText(currentScore);
         }
-        else if(Integer.parseInt(cscore)<100)
+        else if(Integer.parseInt(currentScore)<100)
         {
-            score1.setText("0");
-            score2.setText(cscore.substring(0,1));
-            score3.setText(cscore.substring(1,2));
+            scoreBox1.setText("0");
+            scoreBox2.setText(currentScore.substring(0,1));
+            scoreBox3.setText(currentScore.substring(1,2));
         }
         else
         {
-            score1.setText(cscore.substring(0,1));
-            score2.setText(cscore.substring(1,2));
-            score3.setText(cscore.substring(2,3));
+            scoreBox1.setText(currentScore.substring(0,1));
+            scoreBox2.setText(currentScore.substring(1,2));
+            scoreBox3.setText(currentScore.substring(2,3));
         }
 
-        correctimageview.setOnClickListener(new View.OnClickListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=null;
-
-                String currentscore=db.getFromDb("score");
-                points=Integer.parseInt(currentscore)+points;
-                db.updateUserInfo("level",level+1);
-                db.updateUserInfo("score",points);
-                firebase.updateScore(db.getFromDb("name"),points);
+                Intent i;
+                String currentScore=db.getFromDb(Constants.SCORE);
+                points=Integer.parseInt(currentScore)+points;
+                db.updateUserInfo(Constants.LEVEL,level+1);
+                db.updateUserInfo(Constants.SCORE,points);
+                firebase.updateScore(db.getFromDb(Constants.NAME),points);
                 finish();
                 if(new Common().validateCompletion(Riddle.this))
                     return;
@@ -109,26 +110,26 @@ public class Riddle extends AppCompatActivity {
 
 
 
-        hintsview.setOnClickListener(new View.OnClickListener() {
+        hintsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getHints();
                 points=points-1;
-                hintsview.setEnabled(false);
-                hintsview.setAlpha(.5f);
+                hintsView.setEnabled(false);
+                hintsView.setAlpha(.5f);
 
             }
         });
 
-        passview.setOnClickListener(new View.OnClickListener() {
+        passView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 points=0;
                 showAnswer();
-                passview.setAlpha(.5f);
-                passview.setEnabled(false);
-                hintsview.setEnabled(false);
-                hintsview.setAlpha(.5f);
+                passView.setAlpha(.5f);
+                passView.setEnabled(false);
+                hintsView.setEnabled(false);
+                hintsView.setAlpha(.5f);
             }
         });
 
@@ -147,21 +148,17 @@ public class Riddle extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        System.out.println(item.getTitle());
         return new Common().createAlertDialog(Riddle.this,item,db);
-
     }
 
 
-    public void getHints()
-    {
+    public void getHints() {
         clearTextBox();
         EditText et;
         Set<Integer> set=new HashSet<>();
-        int n=anslength/2;
-        while(set.size()<n)
-        {
-            set.add(new Random().nextInt(anslength));
+        int n= ansLength /2;
+        while(set.size()<n) {
+            set.add(new Random().nextInt(ansLength));
         }
 
         clearTextBox();
@@ -176,49 +173,43 @@ public class Riddle extends AppCompatActivity {
     }
 
 
-    public void nextFocus(int id)
-    {
-        EditText et;
-        for(int i=0;i<anslength;i++)
+    public void nextFocus(int id) {
+        EditText editText;
+        for(int i = 0; i< ansLength; i++)
         {
-            et=(EditText)findViewById(i+1);
-            if(et.isEnabled() && id!=i+1)
+            editText=(EditText)findViewById(i+1);
+            if(editText.isEnabled() && id!=i+1)
             {
-                et.requestFocus();
-                et.invalidate();
+                editText.requestFocus();
+                editText.invalidate();
                 return;
             }
 
         }
     }
 
-    public void showAnswer()
-    {
-        for(int i=0;i<anslength;i++)
-        {
+    public void showAnswer() {
+        for(int i = 0; i< ansLength; i++) {
             EditText et=(EditText)findViewById(1+i);
             et.setText(ans.substring(i,i+1));
             et.setFocusable(false);
             et.invalidate();
         }
-
     }
 
 
 
-    public void setQue(int id)
-    {
+    public void setQue(int id) {
         Cursor cursor=db.getData(id);
         que.setText(cursor.getString(1));
         qno.setText("#"+cursor.getString(0));
         ans=cursor.getString(2);
-        anslength=cursor.getString(2).length();
+        ansLength =cursor.getString(2).length();
     }
 
     public void clearTextBox()
     {
-        for(int i=0;i<anslength;i++)
-        {
+        for(int i = 0; i< ansLength; i++) {
             EditText et=findViewById(1+i);
             et.getText().clear();
             et.setEnabled(true);
@@ -233,7 +224,7 @@ public class Riddle extends AppCompatActivity {
         final String str=ans.toLowerCase();
         final RelativeLayout ll=findViewById(R.id.rl);
         int t=20;
-        for(int i=0;i<anslength;i++) {
+        for(int i = 0; i< ansLength; i++) {
             final EditText et = new EditText(this);
             RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             p.leftMargin=t;
@@ -249,7 +240,8 @@ public class Riddle extends AppCompatActivity {
             et.setBackgroundResource(R.drawable.rect);
             if(i==0){
                 et.requestFocus();
-                et.setAlpha(.5f);}
+                et.setAlpha(.5f);
+            }
             //et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
 
             et.setFilters(new InputFilter[]{
@@ -269,8 +261,6 @@ public class Riddle extends AppCompatActivity {
 
             t=t+120;
             //et.setPadding(0,0,0,20);
-
-
 
             et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
@@ -310,30 +300,23 @@ public class Riddle extends AppCompatActivity {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     String ans="";
                     int id=et.getId();
-                   String c=s.toString();
 
-                    for(int i=0;i<anslength;i++)
-                    {
+                    for(int i = 0; i< ansLength; i++) {
                         EditText text=findViewById(1+i);
                         ans=ans.concat(text.getText().toString());
                     }
-                    System.out.println(ans+" "+str);
-                    EditText next=findViewById(id+1);
 
 
                     if(s.length()>0)
-                    if(s.charAt(0)==str.charAt(id-1))
-                    {
+                    if(s.charAt(0)==str.charAt(id-1)) {
                         et.setBackgroundResource(R.drawable.correct);
                         nextFocus(et.getId());
                         et.setEnabled(false);
                     }
 
-                    if(ans.equals(str))
-                    {
-                        System.out.println(ans+" "+str);
-                        correctimageview.setEnabled(true);
-                        correctimageview.setAlpha(1f);
+                    if(ans.equals(str)) {
+                        Riddle.this.next.setEnabled(true);
+                        Riddle.this.next.setAlpha(1f);
                     }
                 }
 

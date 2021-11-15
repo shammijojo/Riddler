@@ -3,6 +3,7 @@ package com.myapp.riddle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.myapp.riddle.config.Common;
+import com.myapp.riddle.config.Constants;
 import com.myapp.riddle.database.Database;
 import com.myapp.riddle.database.Firebase;
 
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Leaderboard extends AppCompatActivity {
 
@@ -31,8 +34,8 @@ public class Leaderboard extends AppCompatActivity {
 
     List<leaderboard_user> leaderboardUsers;
     ListView listView;
-    Database db;
-    Firebase firebase;
+
+    private final Activity CURRENT_ACTIVITY=Leaderboard.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +45,6 @@ public class Leaderboard extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         leaderboardUsers =new ArrayList<>();
-        db=new Database(this);
-        firebase=new Firebase();
-
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -52,9 +52,9 @@ public class Leaderboard extends AppCompatActivity {
                 leaderboardUsers.clear();
                 for(DataSnapshot data:dataSnapshot.getChildren()){
                     leaderboard_user leaderboard_user=new leaderboard_user();
-                    leaderboard_user.setUsername(data.child("name").getValue().toString());
-                    leaderboard_user.setScore(data.child("score").getValue().toString());
-                    leaderboard_user.setImageId(Integer.parseInt(data.child("image").getValue().toString()));
+                    leaderboard_user.setUsername(data.child(Constants.NAME).getValue().toString());
+                    leaderboard_user.setScore(data.child(Constants.SCORE).getValue().toString());
+                    leaderboard_user.setImageId(Integer.parseInt(data.child(Constants.IMAGE).getValue().toString()));
                     leaderboardUsers.add(leaderboard_user);
                 }
 
@@ -74,7 +74,6 @@ public class Leaderboard extends AppCompatActivity {
                 LeaderboardList adapter=new LeaderboardList(Leaderboard.this, leaderboardUsers);
                 listView=findViewById(R.id.list);
                 listView.setAdapter(adapter);
-
             }
 
 
@@ -97,7 +96,7 @@ public class Leaderboard extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return new Common().createAlertDialog(Leaderboard.this,item,db);
+        return new Common().createAlertDialog(Leaderboard.this,item,new Common().getDatabaseObject(CURRENT_ACTIVITY));
     }
 
     @Override
