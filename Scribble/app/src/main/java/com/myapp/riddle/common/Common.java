@@ -1,4 +1,4 @@
-package com.myapp.riddle.config;
+package com.myapp.riddle.common;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,13 +9,20 @@ import android.view.MenuItem;
 
 import com.myapp.riddle.Homepage;
 import com.myapp.riddle.Leaderboard;
-import com.myapp.riddle.database.Database;
-import com.myapp.riddle.database.Firebase;
+import com.myapp.riddle.config.Constants;
+import com.myapp.riddle.dao.Database;
+import com.myapp.riddle.dao.Firebase;
 
 public class Common {
 
+
     private static Firebase firebase;
     private static Database database;
+
+    private Activity activity;
+    public Common(Activity activity) {
+        this.activity = activity;
+    }
 
     public Firebase getFirebaseObject(){
         if(firebase==null) {
@@ -31,8 +38,12 @@ public class Common {
         return database;
     }
 
-    public boolean validateCompletion(Activity activity){
-        if(Integer.parseInt(new Database(activity).getFromDb(Constants.LEVEL))>Constants.TOTAL_QUE){
+    /**
+     * Checks if the user has attempted all questions
+     * @return true if all questions attempted
+     */
+    public boolean validateCompletion(){
+        if(Integer.parseInt(new Database(activity).getDataFromUser(Constants.LEVEL))>Constants.TOTAL_QUE){
             activity.finish();
             Intent i = new Intent(activity, Leaderboard.class);
             activity.startActivity(i);
@@ -41,11 +52,17 @@ public class Common {
         return false;
     }
 
-    public boolean createAlertDialog(final Activity activity, MenuItem item, final Database database){
+    /**
+     * Manages side-menu options
+     * @param item menu-item
+     * @return
+     */
+    public boolean selectMenuItemOption(MenuItem item){
         if(item.getTitle().toString().equals(Constants.LEADERBOARD)){
             Intent i=new Intent(activity,Leaderboard.class);
             if(!activity.getClass().equals(Leaderboard.class))
-            activity.startActivity(i);
+                activity.startActivity(i);
+
         }
         else if(item.getTitle().toString().equals(Constants.EXIT)){
             activity.moveTaskToBack(true);
@@ -63,7 +80,7 @@ public class Common {
                             dialog.cancel();
                             database.updateUserInfo(Constants.LEVEL,1);
                             database.updateUserInfo(Constants.SCORE,0);
-                            firebase.updateScore(database.getFromDb(Constants.NAME),0);
+                            firebase.updateScore(database.getDataFromUser(Constants.NAME),0);
                             Intent i=new Intent(activity,Homepage.class);
                             activity.startActivity(i);
                         }
@@ -83,8 +100,9 @@ public class Common {
         }
 
         return true;
-
     }
+
+
 
 
 }

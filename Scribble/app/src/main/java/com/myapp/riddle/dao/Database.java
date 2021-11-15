@@ -1,4 +1,4 @@
-package com.myapp.riddle.database;
+package com.myapp.riddle.dao;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +8,9 @@ import android.util.Log;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * Read/Write operations from/to SQLite
+ */
 public class Database extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "MyDBName.db";
@@ -20,9 +23,8 @@ public class Database extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase mydb) {
-        System.out.println("hello");
-        createTable(mydb);
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        createTable(sqLiteDatabase);
     }
 
     @Override
@@ -31,40 +33,36 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public void createTable(SQLiteDatabase mydb)
-    {
+    public void createTable(SQLiteDatabase sqLiteDatabase) {
         String query="create table if not exists riddles(id integer PRIMARY KEY,question text NOT NULL,answer text NOT NULL);";
-        mydb.execSQL(query);
-        Log.i(TAG, "SQLITE:Riddles table created");
+        sqLiteDatabase.execSQL(query);
+       // Log.i(TAG, "SQLITE:Riddles table created");
         query="create table if not exists userinfo(id integer PRIMARY KEY,name text,start integer,level integer,score integer,pic integer);";
-        mydb.execSQL(query);
-        Log.i(TAG,"SQLITE:User table created");
-
+        sqLiteDatabase.execSQL(query);
+       // Log.i(TAG,"SQLITE:User table created");
     }
 
 
-    public void insertData()
-    {
+    public void addNewUser() {
         sqLiteDatabase=this.getWritableDatabase();
         try {
             String query = "insert into userinfo values(1,'',0,1,0,0);";
             sqLiteDatabase.execSQL(query);
-            Log.i(TAG,"SQLITE:User table initialised");
+           // Log.i(TAG,"SQLITE:User table initialised");
         }
         catch (Exception e){
-            Log.e(TAG, "Error while initialising user table" );;}
+            //Log.e(TAG, "Error while initialising user table" );
+        }
     }
 
-    public void insertRows(int id, String question, String answer)
-    {
+    public void insertRiddles(int id, String question, String answer) {
         sqLiteDatabase=this.getWritableDatabase();
         String query="insert into riddles values("+id+",\""+question+"\",\""+answer+"\");";
         sqLiteDatabase.execSQL(query);
-        Log.i(TAG, "Riddles: "+id+" inserted");
+       // Log.i(TAG, "Riddles: "+id+" inserted");
     }
 
-    public Cursor getData(int  id)
-    {
+    public Cursor getDataFromRiddles(int  id) {
         sqLiteDatabase=this.getReadableDatabase();
         Cursor res =  sqLiteDatabase.rawQuery("select * from riddles where id="+id,null);
         res.moveToFirst();
@@ -72,8 +70,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public String getFromDb(String column)
-    {
+    public String getDataFromUser(String column) {
         sqLiteDatabase=getReadableDatabase();
         String query="select "+column+" from userinfo";
         Cursor cursor=sqLiteDatabase.rawQuery(query,null);
@@ -81,8 +78,7 @@ public class Database extends SQLiteOpenHelper {
         return cursor.getString(0);
     }
 
-    public void updateUserInfo(String column, int value)
-    {
+    public void updateUserInfo(String column, int value) {
         sqLiteDatabase=this.getWritableDatabase();
         String query="update userinfo set "+column+"="+value+" where id=1;";
         sqLiteDatabase.execSQL(query);
@@ -90,17 +86,15 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public void updateUsername(String column, String name)
-    {
+    public void updateUserInfo(String column, String name) {
         sqLiteDatabase=this.getWritableDatabase();
         String query="update userinfo set "+column+"='"+name+"' where id=1;";
         sqLiteDatabase.execSQL(query);
-       Log.i(TAG,column+" updated to "+name);
+       //Log.i(TAG,column+" updated to "+name);
     }
 
 
-    public boolean checkForNewUser()
-    {
+    public boolean checkForNewUser() {
         sqLiteDatabase=getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery("select start from userinfo",null);
         cursor.moveToFirst();
@@ -108,7 +102,6 @@ public class Database extends SQLiteOpenHelper {
             return true;
         else
             return false;
-
     }
 
 }

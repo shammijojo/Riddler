@@ -11,16 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.myapp.riddle.Model.leaderboard_user;
+import com.myapp.riddle.Model.leaderboardUser;
 
 import java.util.List;
 
-public class LeaderboardList extends ArrayAdapter<leaderboard_user> {
+public class LeaderboardList extends ArrayAdapter<leaderboardUser> {
 
     LayoutInflater inflater;
     ImageView image;
 
-    public LeaderboardList(@NonNull Context context, List<leaderboard_user> list) {
+    public LeaderboardList(@NonNull Context context, List<leaderboardUser> list) {
         super(context, R.layout.leaderboard_score_layout,list);
        inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -34,15 +34,19 @@ public class LeaderboardList extends ArrayAdapter<leaderboard_user> {
     TextView score=(TextView)view.findViewById(R.id.score);
     image=(ImageView)view.findViewById(R.id.profilePic);
 
-    leaderboard_user leaderboard_user=getItem(position);
-    name.setText(leaderboard_user.getUsername());
-    score.setText(leaderboard_user.getScore());
-    setImage(leaderboard_user.getImageId());
+    leaderboardUser leaderboardUser =getItem(position);
+    name.setText(leaderboardUser.getUsername());
+    score.setText(leaderboardUser.getScore());
+    setImage(leaderboardUser.getImageId());
 
     return view;
     }
 
 
+    /**
+     * Sets the profile picture in ImageView
+     * @param id Image-id of user read from Firebase
+     */
     private void setImage(int id)
     {
         switch(id){

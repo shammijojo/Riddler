@@ -22,10 +22,10 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.myapp.riddle.config.Common;
+import com.myapp.riddle.common.Common;
 import com.myapp.riddle.config.Constants;
-import com.myapp.riddle.database.Database;
-import com.myapp.riddle.database.Firebase;
+import com.myapp.riddle.dao.Database;
+import com.myapp.riddle.dao.Firebase;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -41,6 +41,7 @@ public class Riddle extends AppCompatActivity {
     int ansLength;
     Database db;
     Firebase firebase;
+    Common common;
 
     private final Activity CURRENT_ACTIVITY=Riddle.this;
 
@@ -56,7 +57,7 @@ public class Riddle extends AppCompatActivity {
         scoreBox3 = findViewById(R.id.scoreBox3);
         qno = findViewById(R.id.queNumber);
 
-        Common common=new Common();
+        common=new Common(Riddle.this);
         db=common.getDatabaseObject(getApplicationContext());
         firebase=common.getFirebaseObject();
 
@@ -66,10 +67,10 @@ public class Riddle extends AppCompatActivity {
         que=findViewById(R.id.que);
         db=new Database(this);
 
-        final int level=Integer.parseInt(db.getFromDb(Constants.LEVEL));
+        final int level=Integer.parseInt(db.getDataFromUser(Constants.LEVEL));
         setQue(level);
 
-        String currentScore=db.getFromDb(Constants.SCORE);
+        String currentScore=db.getDataFromUser(Constants.SCORE);
         if(Integer.parseInt(currentScore)<10)
         {
             scoreBox1.setText("0");
@@ -93,13 +94,13 @@ public class Riddle extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i;
-                String currentScore=db.getFromDb(Constants.SCORE);
+                String currentScore=db.getDataFromUser(Constants.SCORE);
                 points=Integer.parseInt(currentScore)+points;
                 db.updateUserInfo(Constants.LEVEL,level+1);
                 db.updateUserInfo(Constants.SCORE,points);
-                firebase.updateScore(db.getFromDb(Constants.NAME),points);
+                firebase.updateScore(db.getDataFromUser(Constants.NAME),points);
                 finish();
-                if(new Common().validateCompletion(Riddle.this))
+                if(common.validateCompletion())
                     return;
                 else {
                     i = new Intent(getApplicationContext(), Riddle.class);
@@ -148,10 +149,13 @@ public class Riddle extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return new Common().createAlertDialog(Riddle.this,item,db);
+        return common.selectMenuItemOption(item);
     }
 
 
+    /**
+     * Populating the random answer textfields on choosing hints option
+     */
     public void getHints() {
         clearTextBox();
         EditText et;
@@ -172,6 +176,10 @@ public class Riddle extends AppCompatActivity {
     }
 
 
+    /**
+     * Focus cursor to next eligible textfield
+     * @param id
+     */
     public void nextFocus(int id) {
         EditText editText;
         for(int i = 0; i< ansLength; i++)
@@ -187,6 +195,9 @@ public class Riddle extends AppCompatActivity {
         }
     }
 
+    /**
+     * Shows answer on passing the question
+     */
     public void showAnswer() {
         for(int i = 0; i< ansLength; i++) {
             EditText et=(EditText)findViewById(1+i);
@@ -197,9 +208,12 @@ public class Riddle extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Displays next question
+     * @param id Question number
+     */
     public void setQue(int id) {
-        Cursor cursor=db.getData(id);
+        Cursor cursor=db.getDataFromRiddles(id);
         que.setText(cursor.getString(1));
         qno.setText("#"+cursor.getString(0));
         ans=cursor.getString(2);
@@ -209,14 +223,17 @@ public class Riddle extends AppCompatActivity {
     public void clearTextBox()
     {
         for(int i = 0; i< ansLength; i++) {
-            EditText et=findViewById(1+i);
-            et.getText().clear();
-            et.setEnabled(true);
-            et.setBackgroundResource(R.drawable.rect);
-            et.invalidate();
+            EditText editText=findViewById(1+i);
+            editText.getText().clear();
+            editText.setEnabled(true);
+            editText.setBackgroundResource(R.drawable.rect);
+            editText.invalidate();
         }
     }
 
+    /**
+     * Dynamically adds the textfields depending on the length of answer
+     */
     @SuppressLint("ResourceType")
     public void addTextBox()
     {
@@ -257,9 +274,7 @@ public class Riddle extends AppCompatActivity {
 
             });
             ll.addView(editText, p);
-
             t=t+120;
-            //et.setPadding(0,0,0,20);
 
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override

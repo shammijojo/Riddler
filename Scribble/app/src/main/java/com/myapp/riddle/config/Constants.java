@@ -27,12 +27,6 @@ public class Constants {
     public static final String START_THE_GAME="START THE GAME";
     public static final String CONTINUE_THE_GAME="CONTINUE THE GAME";
 
-    public static final Class HOMEPAGE_CLASS= Homepage.class;
-    public static final Class LEADERBOARD_CLASS= Leaderboard.class;
-    public static final Class LEADERBOARD_LIST_CLASS= LeaderboardList.class;
-    public static final Class MAIN_ACTIVITY_CLASS= MainActivity.class;
-    public static final Class RIDDLE_CLASS= Riddle.class;
-
     public static final String YES="Yes";
     public static final String NO="No";
     public static final String CONFIRM_RESTART="Are you sure to restart?";

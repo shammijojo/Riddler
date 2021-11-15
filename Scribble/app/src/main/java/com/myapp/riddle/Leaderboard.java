@@ -15,8 +15,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.myapp.riddle.Model.leaderboard_user;
-import com.myapp.riddle.config.Common;
+import com.myapp.riddle.Model.leaderboardUser;
+import com.myapp.riddle.common.Common;
 import com.myapp.riddle.config.Constants;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class Leaderboard extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    List<leaderboard_user> leaderboardUsers;
+    List<leaderboardUser> leaderboardUsers;
     ListView listView;
 
     private final Activity CURRENT_ACTIVITY=Leaderboard.this;
@@ -48,20 +48,18 @@ public class Leaderboard extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 leaderboardUsers.clear();
                 for(DataSnapshot data:dataSnapshot.getChildren()){
-                    leaderboard_user leaderboard_user=new leaderboard_user();
-                    leaderboard_user.setUsername(data.child(Constants.NAME).getValue().toString());
-                    leaderboard_user.setScore(data.child(Constants.SCORE).getValue().toString());
-                    leaderboard_user.setImageId(Integer.parseInt(data.child(Constants.IMAGE).getValue().toString()));
-                    leaderboardUsers.add(leaderboard_user);
+                    leaderboardUser leaderboardUser =new leaderboardUser();
+                    leaderboardUser.setUsername(data.child(Constants.NAME).getValue().toString());
+                    leaderboardUser.setScore(data.child(Constants.SCORE).getValue().toString());
+                    leaderboardUser.setImageId(Integer.parseInt(data.child(Constants.IMAGE).getValue().toString()));
+                    leaderboardUsers.add(leaderboardUser);
                 }
 
-
-                Comparator<leaderboard_user> compareByScore=new Comparator<leaderboard_user>() {
+                Comparator<leaderboardUser> compareByScore=new Comparator<leaderboardUser>() {
                     @Override
-                    public int compare(leaderboard_user u1, leaderboard_user u2) {
+                    public int compare(leaderboardUser u1, leaderboardUser u2) {
                         Integer s1=Integer.parseInt(u1.getScore());
                         Integer s2=Integer.parseInt(u2.getScore());
-
                         return s2.compareTo(s1);
                     }
                 };
@@ -79,9 +77,7 @@ public class Leaderboard extends AppCompatActivity {
 
             }
         });
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
@@ -93,13 +89,13 @@ public class Leaderboard extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return new Common().createAlertDialog(Leaderboard.this,item,new Common().getDatabaseObject(CURRENT_ACTIVITY));
+        Common common=new Common(Leaderboard.this);
+        return common.selectMenuItemOption(item);
     }
 
     @Override
     public void onBackPressed() {
         finish();
     }
-
 
 }

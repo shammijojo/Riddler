@@ -1,4 +1,4 @@
-package com.myapp.riddle.database;
+package com.myapp.riddle.dao;
 
 import android.content.Context;
 import android.os.Build;
@@ -14,12 +14,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import static android.content.ContentValues.TAG;
 
+import com.myapp.riddle.MainActivity;
 import com.myapp.riddle.config.Constants;
 
 public class AddRiddles extends AppCompatActivity {
 
+    Context context;
+    public AddRiddles(Context context) {
+        this.context=context;
+    }
+
+    /**
+     * Reads riddles from text file and adds them to SQLite
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void readRiddles(Context context)
+    public void readRiddles()
     {
         Database db=new Database(context);
         int i=1;
@@ -31,13 +40,13 @@ public class AddRiddles extends AppCompatActivity {
          if (is!=null) {
              while ((que = reader.readLine()) != null) {
                  ans=reader.readLine();
-                 db.insertRows(i,que,ans);
+                 db.insertRiddles(i,que,ans);
                  i++;
              }
          }
     }
         catch(Exception e) {
-            Log.i(TAG,"Error while inserting data into riddles");
+           // Log.i(TAG,"Error while inserting data into riddles");
         }
     }
 

@@ -23,11 +23,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.myapp.riddle.config.Common;
+import com.myapp.riddle.common.Common;
 import com.myapp.riddle.config.Constants;
-import com.myapp.riddle.database.AddRiddles;
-import com.myapp.riddle.database.Database;
-import com.myapp.riddle.database.Firebase;
+import com.myapp.riddle.dao.AddRiddles;
+import com.myapp.riddle.dao.Database;
+import com.myapp.riddle.dao.Firebase;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -51,17 +51,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Common common=new Common();
+        Common common=new Common(MainActivity.this);
         db=common.getDatabaseObject(getApplicationContext());
         firebase=common.getFirebaseObject();
 
-        db.insertData();
+        db.addNewUser();
 
-        addRiddles=new AddRiddles();
+        addRiddles=new AddRiddles(getApplicationContext());
         name=findViewById(R.id.username);
         name.clearFocus();
         next=findViewById(R.id.save);
-        name.setText(db.getFromDb(Constants.NAME));
+        name.setText(db.getDataFromUser(Constants.NAME));
 
         girl = findViewById(R.id.girl);
         joker = findViewById(R.id.joker);
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 if(db.checkForNewUser()){
-                    addRiddles.readRiddles(MainActivity.this);
+                    addRiddles.readRiddles();
                     db.updateUserInfo(Constants.START,1);
                 }
 
@@ -108,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    /**
+     * Selecting the profile pic
+     */
     @Override
     public void onClick(View v) {
 
@@ -123,14 +126,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Confirms exiting the app
+     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
-        builder1.setMessage("Are you sure to exit?");
+        builder1.setMessage(Constants.CONFIRM_EXIT);
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
-                "Yes",
+                Constants.YES,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -139,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
 
         builder1.setNegativeButton(
-                "No",
+                Constants.NO,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -151,9 +157,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    /**
+     * Checks if username is available or not
+     */
     public void validation(){
-
-
         if(TextUtils.isEmpty(name.getText().toString())){
             name.setError("Enter username");
             return;
@@ -167,9 +174,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Boolean found=false;
-                String presentName=db.getFromDb("name");
+                String presentName=db.getDataFromUser(Constants.NAME);
                 for(DataSnapshot data:dataSnapshot.getChildren()){
-                    String uname=data.child("name").getValue().toString();
+                    String uname=data.child(Constants.NAME).getValue().toString();
                     if(uname.equals(name.getText().toString()) && !uname.equals(presentName)){
                         found=true;
                         break;
@@ -188,10 +195,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     else {
                         firebase.updateName(presentName, name.getText().toString());
                         firebase.updateImageId(name.getText().toString(), picId);
-                        firebase.updateScore(Constants.SCORE,Integer.parseInt(db.getFromDb(Constants.SCORE)));
+                        firebase.updateScore(Constants.SCORE,Integer.parseInt(db.getDataFromUser(Constants.SCORE)));
                     }
 
-                    db.updateUsername(Constants.NAME, name.getText().toString());
+                    db.updateUserInfo(Constants.NAME, name.getText().toString());
                     db.updateUserInfo(Constants.PIC, picId);
                     Intent i=new Intent(getApplicationContext(), Homepage.class);
                     i.putExtra(Constants.ID, picId);
@@ -208,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void selectImage(){
-        int id=Integer.parseInt(db.getFromDb(Constants.PIC));
+        int id=Integer.parseInt(db.getDataFromUser(Constants.PIC));
         ImageView imageView=(ImageView)findViewById(id);
         imageView.setAlpha(.5f);
     }

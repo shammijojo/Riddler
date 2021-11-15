@@ -12,9 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.myapp.riddle.config.Common;
+import com.myapp.riddle.common.Common;
 import com.myapp.riddle.config.Constants;
-import com.myapp.riddle.database.Database;
+import com.myapp.riddle.dao.Database;
 
 public class Homepage extends AppCompatActivity {
 
@@ -34,10 +34,10 @@ public class Homepage extends AppCompatActivity {
         changeAvatarButton =(Button)findViewById(R.id.changeAvatar);
 
         db=new Database(this);
-        String picId=db.getFromDb(Constants.PIC);
+        String picId=db.getDataFromUser(Constants.PIC);
         setImage(Integer.parseInt(picId));
 
-        if(Integer.parseInt(db.getFromDb(Constants.LEVEL))==1)
+        if(Integer.parseInt(db.getDataFromUser(Constants.LEVEL))==1)
             startGameButton.setText(Constants.START_THE_GAME);
         else{
             startGameButton.setText(Constants.CONTINUE_THE_GAME);
@@ -55,14 +55,18 @@ public class Homepage extends AppCompatActivity {
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(new Common().validateCompletion(CURRENT_ACTIVITY))
+                if(new Common(Homepage.this).validateCompletion())
                     return;
-                Intent i=new Intent(getApplicationContext(), Constants.RIDDLE_CLASS);
+                Intent i=new Intent(getApplicationContext(), Riddle.class);
                 startActivity(i);
             }
         });
     }
 
+    /**
+     * Sets the profile picture in ImageView
+     * @param id Image-id of user read from Firebase
+     */
     private void setImage(int id)
     {
         switch(id){
@@ -87,7 +91,9 @@ public class Homepage extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Confirms exiting the app
+     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Homepage.this);

@@ -1,4 +1,4 @@
-package com.myapp.riddle.database;
+package com.myapp.riddle.dao;
 
 import android.util.Log;
 
@@ -10,9 +10,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.myapp.riddle.config.Constants;
 
 import androidx.annotation.NonNull;
-
 import static android.content.ContentValues.TAG;
 
+/**
+ * Read/Write operations from/to Firebase
+ */
 public class Firebase {
 
     FirebaseDatabase firebaseDatabase;
@@ -28,7 +30,7 @@ public class Firebase {
         databaseReference.child(key).child(Constants.NAME).setValue(name);
         databaseReference.child(key).child(Constants.SCORE).setValue("0");
         databaseReference.child(key).child(Constants.IMAGE).setValue(imageid);
-        Log.i(TAG,"FIREBASE:New User Registered:"+name);
+       // Log.i(TAG,"FIREBASE:New User Registered:"+name);
     }
 
 
@@ -41,7 +43,7 @@ public class Firebase {
                     String username=data.child(Constants.NAME).getValue().toString();
                     if(username.equals(name)) {
                         data.child(Constants.SCORE).getRef().setValue(score);
-                        Log.i(TAG,"FIREBASE:Score updated for "+name);
+                       // Log.i(TAG,"FIREBASE:Score updated for "+name);
                     }
                 }
             }
@@ -54,7 +56,7 @@ public class Firebase {
     }
 
 
-    public void updateName(final String name, final String newname){
+    public void updateName(final String name, final String newName){
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -62,8 +64,8 @@ public class Firebase {
                 for(DataSnapshot data:dataSnapshot.getChildren()){
                     String username=data.child(Constants.NAME).getValue().toString();
                     if(username.equals(name)) {
-                        data.child(Constants.NAME).getRef().setValue(newname);
-                        Log.i(TAG, "FIREBASE:Name updated to " + newname + " from " + name);
+                        data.child(Constants.NAME).getRef().setValue(newName);
+                       // Log.i(TAG, "FIREBASE:Name updated to " + newName + " from " + name);
                     }
                 }
             }
@@ -75,15 +77,15 @@ public class Firebase {
         });
     }
 
-    public void updateImageId(final String name, final int imageid){
+    public void updateImageId(final String name, final int imageId){
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data:dataSnapshot.getChildren()){
                     String username=data.child(Constants.NAME).getValue().toString();
                     if(username.equals(name)) {
-                        data.child(Constants.IMAGE).getRef().setValue(imageid);
-                        Log.i(TAG,"FIREBASE:Profile pic updated for "+name);
+                        data.child(Constants.IMAGE).getRef().setValue(imageId);
+                       // Log.i(TAG,"FIREBASE:Profile pic updated for "+name);
                     }
                 }
             }

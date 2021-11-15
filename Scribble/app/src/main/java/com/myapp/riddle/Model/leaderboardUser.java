@@ -1,6 +1,9 @@
 package com.myapp.riddle.Model;
 
-public class leaderboard_user {
+/**
+ * POJO for a normal user
+ */
+public class leaderboardUser {
     private String username;
     private String score;
     private int imageId;
