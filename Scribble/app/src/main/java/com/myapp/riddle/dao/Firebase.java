@@ -17,8 +17,8 @@ import static android.content.ContentValues.TAG;
  */
 public class Firebase {
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     public Firebase(){
         firebaseDatabase = FirebaseDatabase.getInstance();

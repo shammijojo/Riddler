@@ -73,13 +73,13 @@ public class Riddle extends AppCompatActivity {
         String currentScore=db.getDataFromUser(Constants.SCORE);
         if(Integer.parseInt(currentScore)<10)
         {
-            scoreBox1.setText("0");
-            scoreBox2.setText("0");
+            scoreBox1.setText(Constants.ZERO);
+            scoreBox2.setText(Constants.ZERO);
             scoreBox3.setText(currentScore);
         }
         else if(Integer.parseInt(currentScore)<100)
         {
-            scoreBox1.setText("0");
+            scoreBox1.setText(Constants.ZERO);
             scoreBox2.setText(currentScore.substring(0,1));
             scoreBox3.setText(currentScore.substring(1,2));
         }

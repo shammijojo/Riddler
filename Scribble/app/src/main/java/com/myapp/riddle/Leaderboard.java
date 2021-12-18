@@ -26,8 +26,8 @@ import java.util.List;
 
 public class Leaderboard extends AppCompatActivity {
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     List<leaderboardUser> leaderboardUsers;
     ListView listView;

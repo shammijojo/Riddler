@@ -9,6 +9,7 @@ import com.myapp.riddle.Riddle;
 public class Constants {
 
     public static  final Integer TOTAL_QUE=59;
+    public static final String ZERO="0";
     public static final String ID="id";
     public static final String FILENAME="riddles.txt";
 
